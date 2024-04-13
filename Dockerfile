@@ -4,7 +4,6 @@ FROM node:slim
 # Setting up the work directory
 WORKDIR /app
 
-
 # Copying all the files in our project
 COPY . .
 
