@@ -3,8 +3,9 @@ name: ci
 on:
   push:
     branches:
-      - 'main'
-
+      - 'main'      
+env:
+  MONGODB_URI: ${{ secrets.MONGODB_URI }}
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -30,4 +31,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: user/app:latest
+          tags: kavisuresh/employeemanagement:latest
