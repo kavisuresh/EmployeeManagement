@@ -20,7 +20,7 @@ jobs:
     - name: Build the Docker image
       run: docker build -t emp .
     - name: Tag the Docker image
-      run: docker tag emp kavisuresh/employeemanagement
+      run: docker tag emp employee
     - name: Push to ECR
       id: ecr
       uses: jwalton/gh-ecr-push@v1
@@ -28,4 +28,4 @@ jobs:
         access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         region: us-east-1
-        image: emp
+        image: employee
