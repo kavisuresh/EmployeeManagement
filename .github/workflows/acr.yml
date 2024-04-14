@@ -16,10 +16,18 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Build and publish image to GCR
-      uses: carbonchain/action-container-registry@v1.1
+    - uses: azure/docker-login@v1
       with:
-        project_id: mcmp-devops-intellingence
-        dockerfile: .
-        image: gcr.io/mcmp-devops-intellingence/employee
-        service_account_key: ${{ secrets.GCLOUD_AUTH }}
+        login-server: employmgmt.azurecr.io
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+
+    - run: |
+        docker build . -t employmgmt.azurecr.io/employee:${{ github.sha }}
+        docker push employmgmt.azurecr.io/employee:${{ github.sha }} 
+
+    - uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'employee148165'
+        publish-profile: ${{ secrets.azureWebAppPublishProfile }}
+        images: 'employmgmt.azurecr.io/employee:${{ github.sha }}'
