@@ -20,12 +20,18 @@ jobs:
     - name: Build the Docker image
       run: docker build -t emp .
     - name: Tag the Docker image
-      run: docker tag emp employee
+      run: docker tag emp public.ecr.aws/f3s6e0s4/employee
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1  
     - name: Push to ECR
       id: ecr
       uses: jwalton/gh-ecr-push@v1
       with:
-        access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        region: us-east-1
-        image: employee
+        image: public.ecr.aws/f3s6e0s4/employee
