@@ -1,4 +1,4 @@
-name: Push Image to ACR
+name: Deploy WebApp
 on:
   push:
     branches: [ "main" ]
