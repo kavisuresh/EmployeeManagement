@@ -1,4 +1,2 @@
 
 # EmployeeManagement
-
-Integration with Jira
